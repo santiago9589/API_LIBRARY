@@ -5,16 +5,8 @@ const responseFile = require("../../main/response")
 
 const router = express.Router()
 
-router.get("/",(req,res)=>{
-    controller.getBooks().then((response) => {
-        responseFile.succes(req, res,response, 200)
-    }).catch((e) => {
-        responseFile.fail(req, res, e.message, 400, "Error en el controlador")
-    })
-})
-
 router.post("/",(req,res)=>{
-    controller.addBook(req.body.name,req.body.gender).then((response) => {
+    controller.addUser(req.body.name,req.body.password).then((response) => {
         responseFile.succes(req, res,response, 200)
     }).catch((e) => {
         responseFile.fail(req, res, e.message, 400, "Error en el controlador")

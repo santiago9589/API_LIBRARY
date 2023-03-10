@@ -12,7 +12,12 @@ const getBooks = async() =>{
 
 const addBook = async(name,gender) =>{
     try {
-      //
+        const newBook = new modelBook({
+            name,
+            gender
+        })
+        const response = await newBook.save()
+        return response
     } catch (error) {
         throw new Error(error)
     }
@@ -43,5 +48,6 @@ const getBook = async(id) =>{
 }
 
 module.exports = {
-    getBooks : getBooks
+    getBooks : getBooks,
+    addBook: addBook
 }

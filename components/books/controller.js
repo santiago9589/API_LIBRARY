@@ -1,9 +1,9 @@
+const modelBook = require("./model")
 
-const data = [{name:"juan"},{name:"pedro"}]
 
 const getBooks = async() =>{
     try {
-        const response = await data
+        const response = await modelBook.find()
         return response
     } catch (error) {
         throw new Error(error)

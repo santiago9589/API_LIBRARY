@@ -21,5 +21,43 @@ router.post("/",(req,res)=>{
     })
 })
 
+router.get("/:id",(req,res)=>{
+    const {id} = req.params
+    controller.getBook(id).then((response)=>{
+        responseFile.succes(req,res,response,200)
+    }).catch((e)=>{
+        responseFile.fail(req,res,e.message,400,"Error en el controlador")
+    })
+})
+
+router.put("/:id",(req,res)=>{
+    const {id} = req.params
+    controller.updateBook(id,req.body.name,req.body.gender).then((response)=>{
+        responseFile.succes(req,res,response,200)
+    }).catch((e)=>{
+        responseFile.fail(req,res,e.message,400,"Error en el controlador")
+    })
+})
+
+router.delete("/:id",(req,res)=>{
+    const {id} = req.params
+    controller.deleteBook(id).then((response)=>{
+        responseFile.succes(req,res,response,200)
+    }).catch((e)=>{
+        responseFile.fail(req,res,e.message,400,"Error en el controlador")
+    })
+})
+
+router.delete("/",(req,res)=>{
+    controller.deleteAllBooks().then((response)=>{
+        responseFile.succes(req,res,response,200)
+    }).catch((e)=>{
+        responseFile.fail(req,res,e.message,400,"Error en el controlador")
+    })
+})
+
+
+
+
 
 module.exports = router

@@ -1,7 +1,7 @@
 const modelBook = require("./model")
 
 
-const getBooks = async() =>{
+const getBooks = async () => {
     try {
         const response = await modelBook.find()
         return response
@@ -10,7 +10,7 @@ const getBooks = async() =>{
     }
 }
 
-const addBook = async(name,gender) =>{
+const addBook = async (name, gender) => {
     try {
         const newBook = new modelBook({
             name,
@@ -23,31 +23,55 @@ const addBook = async(name,gender) =>{
     }
 }
 
-const updateBook = async(id) =>{
+const getBook = async (id) => {
     try {
-      //
+        const bookSelected = await modelBook.findOne({ _id: id })
+        return bookSelected
+    } catch (error) {
+        throw new Error(error)
+    }
+
+}
+
+const updateBook = async (id, name, gender) => {
+    try {
+        const bookSelected = await modelBook.findOne({ _id: id })
+        bookSelected.name = name
+        bookSelected.gender = gender
+        const bookUpdated = await bookSelected.save()
+        return bookUpdated
     } catch (error) {
         throw new Error(error)
     }
 }
 
-const deleteBook = async(id) =>{
+const deleteBook = async (id) => {
     try {
-      //
+        await modelBook.deleteOne({ _id: id })
+        return "registro borrado con exito"
     } catch (error) {
         throw new Error(error)
     }
 }
 
-const getBook = async(id) =>{
+const deleteAllBooks = async () => {
     try {
-      //
+        await modelBook.deleteMany()
+        return "Registros borrados con exito"
     } catch (error) {
         throw new Error(error)
     }
 }
+
 
 module.exports = {
-    getBooks : getBooks,
-    addBook: addBook
+    getBooks: getBooks,
+    addBook: addBook,
+    getBook: getBook,
+    updateBook: updateBook,
+    deleteBook: deleteBook,
+    deleteAllBooks:deleteAllBooks
 }
+
+
+

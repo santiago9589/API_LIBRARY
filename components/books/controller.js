@@ -3,7 +3,7 @@ const modelBook = require("./model")
 
 const getBooks = async () => {
     try {
-        const response = await modelBook.find()
+        const response = await modelBook.find().populate("user","name")
         return response
     } catch (error) {
         throw new Error(error)
@@ -14,7 +14,8 @@ const addBook = async (name, gender) => {
     try {
         const newBook = new modelBook({
             name,
-            gender
+            gender,
+            status:false
         })
         const response = await newBook.save()
         return response
@@ -25,7 +26,7 @@ const addBook = async (name, gender) => {
 
 const getBook = async (id) => {
     try {
-        const bookSelected = await modelBook.findOne({ _id: id })
+        const bookSelected = await modelBook.findOne({ _id: id }).populate("user")
         return bookSelected
     } catch (error) {
         throw new Error(error)

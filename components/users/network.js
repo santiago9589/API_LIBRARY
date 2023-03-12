@@ -13,5 +13,23 @@ router.post("/",(req,res)=>{
     })
 })
 
+router.post("/ask/:id",(req,res)=>{
+    const {id} = req.params
+    controller.askBook(id,req.body.id).then((response) => {
+        responseFile.succes(req, res,response, 200)
+    }).catch((e) => {
+        responseFile.fail(req, res, e.message, 400, "Error en el controlador")
+    })
+})
+
+router.get("/",(req,res)=>{
+    controller.getUsers().then((response) => {
+        responseFile.succes(req, res,response, 200)
+    }).catch((e) => {
+        responseFile.fail(req, res, e.message, 400, "Error en el controlador")
+    })
+})
+
+
 
 module.exports = router

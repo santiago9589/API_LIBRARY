@@ -6,7 +6,7 @@ const responseFile = require("../../main/response")
 const router = express.Router()
 
 router.post("/",(req,res)=>{
-    controller.addUser(req.body.name,req.body.password).then((response) => {
+    controller.addUser(req.body.email,req.body.password).then((response) => {
         responseFile.succes(req, res,response, 200)
     }).catch((e) => {
         responseFile.fail(req, res, e.message, 400, "Error en el controlador")
@@ -16,6 +16,24 @@ router.post("/",(req,res)=>{
 router.post("/ask/:id",(req,res)=>{
     const {id} = req.params
     controller.askBook(id,req.body.id).then((response) => {
+        responseFile.succes(req, res,response, 200)
+    }).catch((e) => {
+        responseFile.fail(req, res, e.message, 400, "Error en el controlador")
+    })
+})
+
+router.post("/back/:id",(req,res)=>{
+    const {id} = req.params
+    controller.backBook(id,req.body.id).then((response) => {
+        responseFile.succes(req, res,response, 200)
+    }).catch((e) => {
+        responseFile.fail(req, res, e.message, 400, "Error en el controlador")
+    })
+})
+
+router.delete("/:id",(req,res)=>{
+    const {id} = req.params
+    controller.deleteUser(id,req.body.id).then((response) => {
         responseFile.succes(req, res,response, 200)
     }).catch((e) => {
         responseFile.fail(req, res, e.message, 400, "Error en el controlador")
@@ -32,4 +50,9 @@ router.get("/",(req,res)=>{
 
 
 
+
+
 module.exports = router
+
+
+//640e250c9d5ea7339298a687

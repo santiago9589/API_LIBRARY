@@ -1,11 +1,12 @@
 const express = require("express")
 const controller = require("./controller")
 const responseFile = require("../../main/response")
+const verifyToken = require("../../middlewares/verifyToken")
 
 
 const router = express.Router()
 
-router.get("/",(req,res)=>{
+router.get("/",verifyToken,(req,res)=>{
     controller.getBooks().then((response) => {
         responseFile.succes(req, res,response, 200)
     }).catch((e) => {

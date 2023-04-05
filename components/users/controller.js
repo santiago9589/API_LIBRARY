@@ -1,24 +1,33 @@
 const modelUser = require("./model")
 const modelBook = require("../books/model")
+// const splitFiles = require("../../utils/splitFiles")
 
-const addUser = async (email, password) => {
+const addUser = async (email, password,file) => {
     try {
 
         if (!email || !password) {
             throw new Error("informacion incorrecta")
         }
 
+
+        let fileUrl = ""
+
+        if(file){
+            fileUrl = "http://localhost:4000/file/" + file.filename
+        }
+
+        console.log(fileUrl)
+
         const userExist = await modelUser.findOne({ email })
-
-        console.log(userExist)
-
+        
         if (!!userExist) {
             throw new Error("usuario ya existe")
         }
 
         const newUser = new modelUser({
             email,
-            password
+            password,
+            file:fileUrl
         })
         const response = await newUser.save()
         return response

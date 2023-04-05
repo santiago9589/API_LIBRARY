@@ -1,12 +1,25 @@
 const express = require("express")
 const controller = require("./controller")
 const responseFile = require("../../main/response")
-
+const multer = require("multer")
+const path = require("path")
 
 const router = express.Router()
 
-router.post("/",(req,res)=>{
-    controller.addUser(req.body.email,req.body.password).then((response) => {
+const multer_storage = multer.diskStorage({
+    destination:"public/file",
+    filename:(req,file,cb)=>{
+        cb(null,file.originalname);
+    }
+});
+
+const upload = multer({
+    dest:"public/file",
+    storage:multer_storage 
+}).single('file');
+
+router.post("/",upload,(req,res)=>{
+    controller.addUser(req.body.email,req.body.password,req.file).then((response) => {
         responseFile.succes(req, res,response, 200)
     }).catch((e) => {
         responseFile.fail(req, res, e.message, 400, "Error en el controlador")
